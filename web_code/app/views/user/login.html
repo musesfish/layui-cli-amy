@@ -1,0 +1,149 @@
+<script type="text/html" template>
+    <link rel="stylesheet" href="/static/css/login.css?v={{ layui.admin.v }}-1" media="all">
+</script>
+
+<div class="container login-container">
+    <div class="login-poster"></div>
+    <div class="login-form-container">
+        <form class="login-form-main">
+            <p class="login-form-title">用户登记</p>
+            <p class="login-form-label">账号</p>
+            <div class="login-form-input"><input type="text" id="account" class="layui-input" placeholder="请输入您的系统账号..." ></div>
+            <p class="login-form-label">密码</p>
+            <div class="login-form-input"><input type="password" id="passWord" class="layui-input" placeholder="请输入您的系统密码..."></div>
+            <!-- <p class="login-form-label">验证码</p>
+            <div class="login-form-input">
+                <input type="text" id="code" class="layui-input" placeholder="请输入验证码...">
+                <img id="imgcode" class="login-code" src="" alt="">
+                <span id="acode" class="login-btn-reload"></span>
+            </div> -->
+            <button id="LAY-user-login-submit" class="login-btn-submit">登录</button>
+        </form>
+    </div>
+</div>
+
+
+<script>
+    layui.use(['admin', 'form', 'ajax', 'store','renders'], function () {
+        var $ = layui.$,
+            setter = layui.setter,
+            admin = layui.admin,
+            form = layui.form,
+            router = layui.router(),
+            renders = layui.renders,
+            search = router.search,
+            ajax = layui.ajax,
+            store = layui.store;
+        form.render();
+        $("#account").focus();
+
+        layer && layer.closeAll()
+
+        // 用户已经登陆，重定向到欢迎页
+        if (layui.store.get(layui.setter.tableName).userId) {
+            location.hash = "/"
+        }
+
+        //验证码
+        var url = setter[setter.runServeType].apis;
+        var num = Math.ceil(Math.random() * 100);//生成一个随机数（防止缓存）
+        $("#imgcode").attr('src', url + 'xxx?type=0&num=' + num);
+        $("#acode").click(function () {
+            num = Math.ceil(Math.random() * 100);//生成一个随机数（防止缓存）
+            $("#imgcode").attr('src', url + 'xxx?type=0&num=' + num);
+        });
+        
+        $("#acode").trigger('click');
+        //验证码
+        function testcode() {
+            var obj = {};
+            obj.type = 0;
+            obj.code = $("#code").val();
+            $.ajax({
+                type: 'POST',
+                xhrFields: { withCredentials: true },//带上cookie请求
+                crossDomain: true,
+                url: url + 'xxx',
+                data: obj,
+                success: function (res) {
+                    if (res.ret == 100) {
+                        adminLogin();
+                    } else {
+                        renders.fail(res.msg);
+                        $("#acode").trigger('click');
+                    }
+                }
+            })
+        }
+
+        //提交
+        $('#LAY-user-login-submit').on('click', function () {
+            adminLogin();
+            return false;
+        });
+
+        function adminLogin(){
+            store.set(setter.tableName, {"ret":100,"msg":"成功","userId":1,"token":"amy","time":"2030-04-01 21:09:35","nickName":"amy","companyId":1,"userName":"amy","phoneNumber":"19999999999","headImgUrl":"","roleId":1,"sex":2,"expires":2649091263881,"menu":[]}, setter.expires);
+            console.log('amytest');
+            location.hash = "/";
+            return false;
+            if (!$("#account").val()) {
+                renders.fail('账号不为空！');
+                $("#acode").trigger('click');
+                return;
+            }
+            if (!$("#passWord").val()) {
+                renders.fail('密码不为空！');
+                $("#acode").trigger('click');
+                return;
+            }
+            if (!$("#code").val()) {
+                renders.fail('验证码不为空！');
+                return;
+            }
+            var obj = {};
+            obj.account = $("#account").val();
+            obj.passWord = $("#passWord").val();
+            obj.imgCode = $("#code").val();
+            //请求登入接口
+            $.ajax({
+                type: 'POST',
+                xhrFields: { withCredentials: true },//带上cookie请求
+                crossDomain: true,
+                timeout:5000,
+                url: url + 'xxx',
+                data: obj,
+                success: function (res) {
+                    store.set(setter.tableName, res, setter.expires);
+                    //登入成功的提示与跳转
+                    if (res.ret == 100) {
+                        renders.msg(res.msg, {
+                            end: function () {
+                                ajax({
+                                    url: 'xxx',
+                                    data: {},
+                                    traditional: true,
+                                    type: 'GET',
+                                    callback: function (res) {
+                                        store.set(setter.tableName, {menu:res.dataList}, setter.expires);
+                                    }
+                                })
+                                $("#acode").trigger('click');
+                                location.hash = search.redirect ? decodeURIComponent(search.redirect) : '/';
+                            }
+                        });
+                    } else {
+                        renders.fail(res.msg);
+                        $('.imgCode').val('');
+                        $("#acode").trigger('click');
+                    }
+                },
+                error:function(){
+                    renders.fail('登录超时，请稍后重试！');
+                }
+            })
+        }
+        
+
+    });
+</script>

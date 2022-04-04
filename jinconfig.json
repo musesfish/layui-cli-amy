@@ -1,0 +1,24 @@
+{
+  "repo": "xxx",
+  "utils": "",
+  "gulp": true,
+  "ignore": [
+    ".gitignore",
+    "build",
+    "package.json",
+    "package-lock.json",
+    "yarn-lock.json",
+    "web_code/json",
+    "web_code/static/css",
+    "web_code/index.html",
+    "web_code/app/index.js",
+    "web_code/app/config.js",
+    "web_code/app/controller",
+    "web_code/app/lib/extend",
+    "web_code/app/layout.html",
+    "web_code/app/views/layout.html",
+    "web_code/app/views/template/debug.html",
+    "web_code/app/views/user/login.html",
+    "web_code/layui/css/modules/layer/default/layer.css"
+  ]
+}

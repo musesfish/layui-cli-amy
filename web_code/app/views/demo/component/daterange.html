@@ -1,0 +1,78 @@
+<title>时间范围</title>
+<div class="layui-fluid">
+    <div class="layui-card layui-form">
+        <div class="layui-card-header">时间：秒取值 10，20，30，40，50</div>
+        <div class="layui-card-body">
+            <div class="layui-row">
+                <div class="layui-col-md3">
+                    <div class="layui-form-label">时间</div>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input laydate" data-type='date' readonly name='xxx' >
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-card layui-form">
+        <div class="layui-row">
+            <div class="layui-col-md3">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">时间范围到永久</label>
+                    <div class="layui-input-block date-range flex flex-ac">
+                        <input class="date-range-item" data-start="startDate" data-end="endDate" lay-key="1" data-unlimited="1">
+                        <input class="layui-input flex-1" name="startDate">
+                        <span class="pad-lr-5">~</span>
+                        <input class="layui-input flex-1" name="endDate">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-md3">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">时间范围到永久</label>
+                    <div class="layui-input-block">
+                        <input class="layui-input" id="laydate-elem">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    layui.use(['jquery','laydate', 'renders'], function(){
+
+        var renders = layui.renders, $ = layui.jquery;
+
+        
+
+        var view = $("body");
+
+        renders.date();
+
+        /**
+         * 选择时间范围结束时间为永久
+         * btns： unlimited
+         * 选择开始日期后点击永远，控件返回时间 <开始时间> - 9999-12-31，done回调返回的end值为{永久]。
+         * 传送给后台为日期 9999-12-31, 显示则转化为中文 永久
+         */
+
+        // 一、封装的控件
+        renders.dateRange(view); // data-unlimited=1
+        
+        // 二、框架调用
+        layui.laydate.render({
+            elem: $("#laydate-elem")[0],
+            range: true,
+            trigger: 'click',
+            btns: ["unlimited", 'confirm'],
+            type: 'date', // 仅支持date模式
+            max: '9999-12-31',
+            done: function (val, start, end) {
+                // 点击永久
+                // val = 'yyyy-mm-dd - 9999-12-31'
+                // end = '永久'
+            }
+        })
+    })
+</script>

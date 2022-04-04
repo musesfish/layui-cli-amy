@@ -1,0 +1,18 @@
+[{
+	'iconTag':'layui-icon-user',
+	'id':10,
+	'jumpUrl':'user',
+	'level':1,
+	'menuName':'个人中心',
+    'menus':[{
+		'iconTag':null,
+		'id':64,
+		'jumpUrl':'message',
+		'level':2,
+		'menuName':'消息列表',
+		'menus':null,
+		'parentId':10,
+		'parentIds':'0,10,',
+		'sort':1
+	}]
+}]

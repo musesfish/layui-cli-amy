@@ -1,0 +1,70 @@
+.share_customer-wrap .share_customer-header,
+.share_customer-wrap .share_customer-item {
+  height: 50px;
+  line-height: 50px;
+  border: 1px solid #eee;
+  text-align: center;
+}
+.share_customer-wrap .share_customer-header > dt,
+.share_customer-wrap .share_customer-item > dt,
+.share_customer-wrap .share_customer-header > dd,
+.share_customer-wrap .share_customer-item > dd {
+  border-right: 1px solid #eee;
+}
+.share_customer-wrap .share_customer-header .share_customer-title,
+.share_customer-wrap .share_customer-item .share_customer-title {
+  width: 100px;
+}
+.share_customer-wrap .share_customer-header .share_customer-timer,
+.share_customer-wrap .share_customer-item .share_customer-timer {
+  width: 150px;
+}
+.share_customer-wrap .share_customer-header .share_customer-remarks .layui-input,
+.share_customer-wrap .share_customer-item .share_customer-remarks .layui-input {
+  height: 50px;
+}
+.share_customer-wrap .share_customer-header .share_customer-btn,
+.share_customer-wrap .share_customer-item .share_customer-btn {
+  width: 120px;
+}
+.share_customer-wrap .share_customer-header .share_customer-btn > span,
+.share_customer-wrap .share_customer-item .share_customer-btn > span {
+  padding: 0 10px;
+  color: #00ACAC;
+  cursor: pointer;
+}
+.share_customer-wrap .share_customer-container .share_customer-item {
+  border-top: 0;
+}
+.share_customer-wrap .share_customer-container .share_customer-item .share_customer-remarks {
+  position: relative;
+}
+.share_customer-wrap .share_customer-container .share_customer-item .share_customer-remarks-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0 10px;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  text-align: left;
+}
+.share_customer-wrap .share_customer-container .share_customer-item .share_customer-btn span {
+  display: none;
+}
+.share_customer-wrap .share_customer-container .status-edit .share_customer-remarks-text {
+  display: none;
+}
+.share_customer-wrap .share_customer-container .status-edit .share_customer-btn span {
+  display: unset;
+}
+.share_customer-wrap .share_customer-btn-add {
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  border: 1px solid #eee;
+  border-top: 0;
+  cursor: pointer;
+  user-select: none;
+}

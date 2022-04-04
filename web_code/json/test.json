@@ -1,0 +1,75 @@
+{
+  "ret": 100,
+  "msg": "成功",
+  "data": {
+    "endRow": 2,
+    "firstPage": 1,
+    "hasNextPage": true,
+    "hasPreviousPage": false,
+    "isFirstPage": true,
+    "isLastPage": false,
+    "lastPage": 2,
+    "list": [
+      {
+        "accountName": "string",
+        "accountOpr": 0,
+        "customerId": 0,
+        "customerName": "string",
+        "doZhangAccountOpr": 0,
+        "doZhangAccountingName": "string",
+        "quarterList": [
+          {
+            "confirmationDate": "2020-03-03T05:46:59.062Z",
+            "enterpriseIncomeTax": "string",
+            "enterpriseIncomeTaxDate": "2020-03-03T05:46:59.062Z",
+            "incomeId": 0,
+            "monthList": [
+              {
+                "businessReceipt": 0,
+                "incomePriceExcludingTax": 0,
+                "incomeTax": 0,
+                "issuedInvoice": 0,
+                "materialsTaxDate": "2020-03-03T05:46:59.062Z",
+                "month": 1,
+                "operatingReceipt": "3330",
+                "outputPriceExcludingTax": 0,
+                "outputTax": 0,
+                "socialDate": "2020-03-03T05:46:59.062Z",
+                "taxDate": "2020-03-03T05:46:59.062Z",
+                "taxPurpose": 0
+              }
+            ],
+            "quarters": 1,
+            "remarks": "string"
+          }
+        ]
+      },
+      {
+        "accountId": 1565,
+        "accountName": "罗心怡",
+        "accountOpr": 133,
+        "customerId": 270354,
+        "customerName": "长沙市岳麓区萍萍烟酒商行",
+        "doZhangAccountOpr": 1,
+        "doZhangAccountingId": 923,
+        "doZhangAccountingName": "陈振荣",
+        "quarterList": []
+      }
+    ],
+    "navigateFirstPage": 1,
+    "navigateLastPage": 2,
+    "navigatePages": 8,
+    "navigatepageNums": [
+      1,
+      2
+    ],
+    "nextPage": 2,
+    "pageNum": 1,
+    "pageSize": 2,
+    "pages": 2,
+    "prePage": 0,
+    "size": 2,
+    "startRow": 1,
+    "total": 3
+  }
+}

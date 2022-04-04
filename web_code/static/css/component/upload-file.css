@@ -1,0 +1,47 @@
+.m-up-file-wrap {
+  padding: 0 5px;
+}
+.m-up-file-wrap .item {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 70px;
+  margin-right: 10px;
+  vertical-align: top;
+  text-align: center;
+  overflow: hidden;
+}
+.m-up-file-wrap .item .del {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  color: red;
+  background-color: #fff;
+  box-sizing: border-box;
+  border: 1px solid #d2d2d2;
+  text-align: center;
+  cursor: pointer;
+}
+.m-up-file-wrap .item img {
+  width: 50px;
+}
+.file-tag {
+  position: relative;
+  display: inline-block;
+  padding: 0 5px;
+  margin-right: 15px;
+  height: 36px;
+  line-height: 36px;
+  border: 1px solid #eee;
+  vertical-align: top;
+}
+.file-tag .del-file {
+  position: absolute;
+  top: -16px;
+}
+.z-unedit .btn-up-file {
+  display: none;
+}
+.z-unedit .item .del {
+  display: none;
+}

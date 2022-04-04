@@ -1,0 +1,233 @@
+// main: ../base.less
+.layui-card-body .layui-table { margin: 0; }
+.layui-table tbody tr:hover,
+.layui-table thead tr,
+.layui-table-click,
+.layui-table-header,
+.layui-table-hover,
+.layui-table-mend,
+.layui-table-patch,
+.layui-table-tool,
+.layui-table-total,
+.layui-table-total tr,
+.layui-table[lay-even] tr:nth-child(even) {
+    background-color: #0f37da0f;
+}
+
+.layui-table-page {
+    text-align: center
+}
+.layui-table-view .layui-table {
+    min-width: 100%;
+}
+.layui-table {
+    margin: 0;
+    td {
+        &>b {
+            margin-right: 2px;
+            color: red
+        }
+    }
+    .file-tag {
+        position: relative;
+        padding: 5px 10px;
+        margin-right: 10px;
+        line-height: 32px;
+        background-color: #f2f2f2;
+        box-shadow: 1px 1px 1px #ccc;
+        border-radius: 5px;
+        color: #696969;
+        cursor: pointer;
+        white-space: nowrap;
+        i {
+            margin-left: 5px;
+            vertical-align: middle
+        }
+    }
+}
+
+// 全局默认居中
+.layui-table-header th {
+    text-align: center
+}
+
+.layui-table-body td {
+    text-align: center
+}
+.layui-table-tool-self {
+    float: right;
+}
+
+.layui-table-tool {
+    background-color: unset
+}
+.layui-table td.no-pad {
+    padding: 0
+}
+.layui-table-body {
+    margin-bottom: 0
+}
+
+.layui-table-init .layui-icon {
+    color: green
+}
+
+/* 表格隔行变色 start*/
+.layui-table[lay-even] tbody tr:nth-child(even){    
+    background-color: #fff;
+    &.layui-table-hover {
+        background-color: #0f37da0f;
+    }
+}
+.layui-table[lay-even] tr:hover{    
+    background-color: #0f37da0f;
+}
+/* 表格隔行变色 end*/
+
+/* global layui table 右侧固定列 */
+// .layui-table-fixed-r { display: block!important; }
+/* End */
+
+.form-table {
+    border: 1px solid #e6e6e6;
+    table-layout: fixed;
+    b {
+        color: red;
+        &:empty:before {
+            content: '*';
+        }
+    }
+    td {
+        padding: 0;
+        height: 45px;
+        line-height: 1.2;
+        text-indent: 15px;
+        .layui-input {
+            margin: 1px;
+            padding-right: 10px;
+            border-color: transparent;
+            width: calc( 100% - 2px); // 部分浏览器边框遮挡父容器border
+            min-height: 42px;
+            box-sizing: border-box;
+        }
+        .layui-input:disabled {
+            color: var(--color-disabled);
+        }
+        .layui-textarea {
+            margin: 1px;
+            border-color: transparent;
+            width: calc( 100% - 2px); // 部分浏览器边框遮挡父容器border
+            box-sizing: border-box;
+        }
+        .layui-form-switch {
+            margin-top: 0;
+        }
+        .layui-unselect:not(.layui-form-checkbox):not(.layui-form-switch) {
+            min-height: 46px;
+            line-height: 46px;
+        }
+        &>* {
+            text-indent: 0;
+        }
+    }
+    td:nth-child(odd) {
+        // padding: 0 15px;
+        padding: 0 9px;
+        text-indent: 0;
+    }
+    td .layui-form-radio {
+        margin-left: 15px;
+    }
+    // 兼容将 readonly设置为禁用的表单元素
+    input:read-only,
+    textarea:read-only {
+        border-width: 0!important;
+    }
+    // 例外情况
+    .date-range-item, 
+    .layui-unselect:not(.layui-disabled),
+    .j-sel-personnel,
+    .j-sel-tree,
+    .j-sel-role,
+    .laydate {
+        &:read-only {
+            border-width: 1px!important;
+        }
+    }
+    .layui-disabled::placeholder {
+        color: transparent!important;
+    }
+    input:disabled::placeholder,
+    textarea:disabled::placeholder {
+        color: transparent
+    }
+}
+
+.z-unedit .form-table,
+.form-table .z-unedit {
+    .layui-disabled,
+    .layui-input:disabled,
+    .layui-textarea:disabled {
+        background-color: unset;
+    }
+    b {
+        display: none;
+    }
+}
+
+.z-unedit .z-edit {
+    b {
+        display: unset;
+    }
+}
+
+.form-table .show-bor,
+.form-table.show-bor {
+    td {
+        padding: 10px;
+    }
+    input:read-only:not(.laydate):not(.date-range-item),
+    .layui-input, 
+    .layui-textarea {
+        border-width: 1px!important;
+        border-color: var(--border-color);
+    }
+    .layui-inputs {
+        outline: 1px solid var(--border-color);
+    }
+    .layui-input:read-only::placeholder {
+        color: var(--text-tips-color)!important;
+    }
+}
+
+.form-table .no-td-pad td,
+.form-table td.no-td-pad {
+    padding: 0;
+}
+
+// 收据清单表格
+.ut-receipt {
+    th { 
+        font-weight: normal;
+        }
+    th, td {
+        padding: 5px 10px;
+        line-height: 24px;
+        border: 1px solid #f2f2f2;
+        text-align: center;
+    }
+    td:nth-child(3),td:nth-child(4){
+        text-align: left;
+    }
+}
+
+// 列表页中图片
+.td-img-wrap {
+    display: flex;
+    flex-wrap: nowrap;
+    &>img {
+       width: 30px;
+       height: 30px;
+       object-fit: cover;
+    }
+}

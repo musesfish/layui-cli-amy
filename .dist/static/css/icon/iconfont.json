@@ -1,0 +1,100 @@
+{
+  "id": "793482",
+  "name": "hdz",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "6900629",
+      "name": "heart",
+      "font_class": "heart",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    },
+    {
+      "icon_id": "10304492",
+      "name": "heart",
+      "font_class": "heart-fill",
+      "unicode": "e61b",
+      "unicode_decimal": 58907
+    },
+    {
+      "icon_id": "6660767",
+      "name": "评论",
+      "font_class": "comment",
+      "unicode": "e67e",
+      "unicode_decimal": 59006
+    },
+    {
+      "icon_id": "356505",
+      "name": "people",
+      "font_class": "yidiandiantubiao08",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "933637",
+      "name": "市场分析",
+      "font_class": "shichangfenxi",
+      "unicode": "e614",
+      "unicode_decimal": 58900
+    },
+    {
+      "icon_id": "933682",
+      "name": "市场分析",
+      "font_class": "shichangfenxi1",
+      "unicode": "e627",
+      "unicode_decimal": 58919
+    },
+    {
+      "icon_id": "933706",
+      "name": "市场分析",
+      "font_class": "shichangfenxi2",
+      "unicode": "e62c",
+      "unicode_decimal": 58924
+    },
+    {
+      "icon_id": "4251738",
+      "name": "客户",
+      "font_class": "kehu",
+      "unicode": "e645",
+      "unicode_decimal": 58949
+    },
+    {
+      "icon_id": "5778172",
+      "name": "档案库",
+      "font_class": "dangan",
+      "unicode": "e60d",
+      "unicode_decimal": 58893
+    },
+    {
+      "icon_id": "6321263",
+      "name": "审批",
+      "font_class": "shenpi",
+      "unicode": "e626",
+      "unicode_decimal": 58918
+    },
+    {
+      "icon_id": "10340484",
+      "name": "审批",
+      "font_class": "shenpi1",
+      "unicode": "e652",
+      "unicode_decimal": 58962
+    },
+    {
+      "icon_id": "562685",
+      "name": "Left",
+      "font_class": "left",
+      "unicode": "e621",
+      "unicode_decimal": 58913
+    },
+    {
+      "icon_id": "562700",
+      "name": "Right",
+      "font_class": "right",
+      "unicode": "e62b",
+      "unicode_decimal": 58923
+    }
+  ]
+}

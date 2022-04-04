@@ -1,0 +1,97 @@
+<title>分公司</title><style>#company-demo .layui-card{padding:30px 10px}#company-demo .layui-table-cell{min-height:28px;height:auto}</style><div class="" id="company-demo"></div><script type="text/html" id="companyDemo"><div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-tab">
+            <div class="tb-tool-item layui-card layui-show">
+                <table class="layui-table" id='table-demo' lay-filter='table-demo'></table>
+            </div>
+        </div>
+    </div>
+</div></script><script>layui.use(['form', 'api', 'ajax', 'renders', 'table', 'laytpl', 'eleTree', 'code', 'slider'], function () {
+        var form = layui.form,
+            $ = layui.jquery,
+            tpl = layui.laytpl,
+            api = layui.api,
+            ajax = layui.ajax,
+            renders = layui.renders,
+            table = layui.table;
+
+        var view = $("#company-demo"),
+            tplTemp = companyDemo.innerHTML;
+
+        var rApi = [
+            { url: 'province', data: {}, key: 'province', retKey: 'objList' },
+        ]
+        ajax({ url: rApi, callback: create });
+
+        function create(data) {
+            tpl(tplTemp).render(data, function (html) {
+                view.html(html);
+                form.render();
+                
+                var demoTable;
+                var toolbarTemp = '<div><div class="tb-tool layui-row">' +
+                    '<div class="tb-tool-count pull-left">' +
+                    '<div class="layui-btn" lay-event="claim">选择</div>'+
+                    '</div>' +
+                    '<div class="pull-right tb-tool-tab">' +
+    
+                    '</div>' +
+                    '</div></div>';
+                
+                demoTable = renders.table({
+                    elem: 'table-demo',
+                    url: "/makeAccount/findCustomerMakeAccountList",
+                    text: { "none": '无数据' },
+                    toolbar: toolbarTemp,
+                    cellMinWidth: 120,
+                    parseData: function(res){
+                        var data = renders.changeTableData(res, []);
+                        // 生成 m1-m12
+                        data.data.forEach(element => {
+                            for(let i=1; i<=12; i++){
+                                element[`m${i}`] = element.warehousingMonth.hasOwnProperty(i)?1:0;
+                            }
+                        });
+                        return data
+                    },
+                    cols: [
+                    [
+                        { rowspan:2, checkbox: true, fixed: 'left'},
+                        { rowspan:2, field: 'id', title: '编号', width: 80, },
+                        { colspan:3, title:'第一季度'},
+                        { rowspan:2, field: 'createDate', title: '创建时间', width: 120, templet: function (d) { return d.createDate == null ? '' : d.createDate.split(' ')[0] } },
+                        { rowspan:2, field: 'contactInformation', title: '可编辑列', width: 120, edit: true },
+                        { rowspan:2, field: 'establishDate', title: '成立时间', templet: `
+                            <div>
+                                <p><input type="checkbox" lay-skin="primary" />&nbsp;1</p>
+                                <p><input type="checkbox" lay-skin="primary" />&nbsp;2</p>
+                                <p><input type="checkbox" lay-skin="primary" />&nbsp;3</p>
+                            </div>
+                        ` },
+                        { rowspan:2, field: '', title: '操作', align: 'center',fixed: 'right', templet: `
+                            <div><input type="checkbox" lay-skin="primary" /></div>
+                        `, width: 150 }
+                    ],    
+                    [
+                        { rowspan:1, type: "colcheckbox", field: 'm1', title: '1月', disabled: true },
+                        { rowspan:1, type: "colcheckbox", field: 'm2', title: '2月',  },
+                        { rowspan:2, type: "colcheckbox", field: 'm3', title: '3月',  },
+                    ]],
+                    done: function (res) {
+                        let el = demoTable.config.elem.next();
+                        const trHeight = el.find('.layui-table-main tr').height()+1; // +1 td border
+                        console.log(trHeight)
+                        el.find('.layui-table-fixed .layui-table-body tr').height(trHeight)
+                    }
+                }, {
+                    toolbar: {
+                        "claim": function(obj){
+                            var d = table.checkStatus(obj.config.id); // 选中的数据
+                            console.log(d.data)
+                        }
+                    }
+                })
+
+            })
+        }
+    })</script>

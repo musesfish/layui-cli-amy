@@ -1,0 +1,76 @@
+.m-approval .m-approval-table tr th {
+  border: 0px;
+}
+.m-approval .m-approval-table tr th {
+  background: #E0E0E0;
+}
+.m-approval .m-approval-table tr th,
+.m-approval .m-approval-table tr td {
+  text-align: center;
+}
+.m-approval .m-approval-table tr th:nth-child(1) {
+  width: 15%;
+}
+.m-approval .m-approval-table tr th:nth-child(2) {
+  width: 25%;
+}
+.m-approval .m-approval-table tr th:nth-child(3),
+.m-approval .m-approval-table tr th:nth-child(4),
+.m-approval .m-approval-table tr th:nth-child(5) {
+  width: 20%;
+}
+.m-approval .m-approval-table tr .m-approval-btn-add {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+.m-approval .m-approval-table tr .m-approval-btn-del {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  position: relative;
+  top: 0px;
+}
+.m-approval .m-approval-table tr .m-approval-btn-del.hide {
+  display: none;
+}
+.pro-process-new {
+  height: 100%;
+  border-left: 1px dashed #E0E0E0;
+  margin-left: 20px;
+  margin-top: 30px;
+}
+.pro-process-new ul {
+  padding-bottom: 25px;
+  display: flex;
+  font-size: 14px;
+}
+.pro-process-new ul .avatar {
+  width: 36px;
+  height: 36px;
+  margin-left: -18px;
+}
+.pro-process-new ul .rdl {
+  padding-left: 10px;
+}
+.pro-process-new ul .rdl p {
+  padding-top: 5px;
+}
+.pro-process-new ul .rdl .tip-blue {
+  color: #00ACAC;
+}
+.pro-process-new ul .rdl .tip-orange {
+  color: #F29812;
+}
+.pro-process-new ul .rdl .tip-red {
+  color: #F21712;
+}
+.pro-process-new ul .rdl .normal {
+  color: #999;
+}
+.pro-process-new ul .rdl .approval-img {
+  width: 50px;
+  height: 50px;
+}

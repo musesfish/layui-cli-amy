@@ -1,0 +1,249 @@
+<title>授权表单</title>
+
+<div class="layui-fluid">
+    <div class="layui-card" >
+        <div class="layui-card-header">主体层</div>
+        <div class="layui-card-body">
+            <form class="layui-form">
+                <!-- 表单区域 -->
+                <div class="m-auth-form" id="demo-auth-form"></div>
+                <div class="layui-row">
+                    <button class="layui-btn w100 pull-right" lay-submit>提交</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="layui-card">
+        <div class="layui-card-header">Layer弹层控件（iframe）</div>
+        <div class="layui-card-body">
+            <div class="layui-row">
+                <div class="layui-col-md3">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">角色选择：</label>
+                        <div class="layui-input-block">
+                            <input type="hidden" name="positionId">
+                            <input type="text" class="layui-input j-sel-role" data-name="positionId" readonly>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-card">
+        <div class="layui-card-header">表格区域</div>
+    </div>
+</div>
+<script>
+    /**
+     * @authForm
+     * 权限表单JS组件
+     * 仅适用于主视图容器中
+     * 
+     * @params {Arrary} control - 权限值 ['省','分公司'] 
+     * 预设类型： input, select, province, treeCompany, treeDepartment, dateRange, selPersonnel
+     * 自定义类型： slot：<HTML结构>
+    */
+    layui.use(['form', 'api', 'ajax', 'renders', 'table', 'utils', 'laytpl', 'laydate', 'eleTree', 'code', 'slider', 'authForm', 'selPersonnel', "selRole"], function () {
+        var form = layui.form,
+            $ = layui.jquery,
+            tpl = layui.laytpl,
+            api = layui.api,
+            ajax = layui.ajax,
+            renders = layui.renders,
+            table = layui.table;
+        var viewForm = $(".layadmin-tabsbody-item.layui-show .m-auth-form"); // 可以保证唯一性
+        var control = []; // 授权
+        var rApi = [
+            { url: 'province', data: {}, is: false, key: 'province', retKey: 'objList' },
+            { url: '/page/getPagesByMenu', data: { "menuUrl": "/market/marketDistribute/"}, key: "control", retKey: function(a){
+                    $(a.dataList).each(function(idx,item){
+                        control.push(item.controlName)   
+                    })
+                }
+            }
+        ];
+
+        // 表单配置
+        var formOpt = [
+            {   // 普通input
+                type: 'input',      // 预设类型 基础:input,select 扩展：province,treeCompany,treeDepartment,dateRange
+                authKey: '省',      // 授权检验值，和control对应
+                label: '分组一',     // layui-form-label的值
+                name: 'userName',   // input输入框的name
+                groupClass: 'tab-1'
+            },
+            {   // select
+                type: 'select',
+                authKey: '分公司',
+                label: '下拉列表',
+                name: 'Fuck', 
+                options: [ // select的值
+                    { value: '', label: '' }, // 默认 等同与请选择
+                    { value: '1', label: '男' },
+                    { value: '2', label: '女' }
+                ]
+            },
+            // 其他类型 不填写type，直接输入layui-input-block节点的HTML
+            { 
+                authKey: '分公司',
+                label: '其他类型', 
+                slot: [ // 非预设类型
+                    '<div class="layui-input-block">',
+                        '<input type="radio" name="sex" value="男" title="男">',
+                        '<input type="radio" name="sex" value="女" title="女" checked>',
+                    '</div>'
+                ]
+            },
+            [
+                // input
+                {   
+                    type: 'input',
+                    authKey: '省',
+                    label: '分组二',
+                    name: 'userName',
+                    class: 'layui-col-md4 layui-col-sm6 tab-2' // 重新定义最完成的样式
+                },
+                // input
+                {   
+                    authKey: '省',
+                    label: '数值',
+                    slot: [ 
+                        '<div class="layui-input-block">',
+                            '<input type="number" class="layui-input" value="" title="男">',
+                        '</div>'
+                    ]
+                }
+            ],
+            [
+                // 省
+                { type: 'province', authKey: "省", label: '省' },
+                // 分公司结构树
+                { type: 'treeCompany', authKey: "省", layFilter: 'M-qu' },
+                // 分公司结构树，自定义lay-filter
+                { type: 'treeCompany', authKey: "省", },
+                // 部门结构树
+                { type: 'treeDepartment', authKey: "省" }
+            ],
+            [
+                // 日期
+                { type: 'date', authKey: '省', label: '日期', name: 'xxx' },
+                // 日期范围
+                { type: 'dateRange', authKey: '省', label: '数组', name: ['biu','piu'] },
+                { type: 'dateRange', authKey: '省', label: '字符串', name: 'pob,qob'},
+                { type: 'dateRange', authKey: '省', label: '月份', name: 'pob,qob', data: { type: "month" }},
+                { type: 'dateRange', authKey: '省', label: '时分', name: 'jj', data: { type: 'time' }}
+            ],
+            [
+                {   // 人员选择
+                    type: 'selPersonnel', 
+                    authKey: '省', 
+                    label: '人员选择', 
+                    name: 'userName',   // 默认为空
+                    dataName: 'userId'  // 默认
+                },
+                // 存在bug
+                {  type: 'selPersonnel', authKey: '省', label: '人员选择(多人)', count: 2 }
+            ],
+            [   // groupClass 追加到容器上的类名，作用tab切换控制显示隐藏
+                // css在页面容器预置有自定义属性 tab [one,two,three]
+                // expamle
+                // $('.layui-fluid').attr('tab', 'one')
+                { type: 'input', authKey: '省', label: '分组xxx', groupClass: 'tab-one-form-item' },
+                { type: 'input', authKey: '省', label: '分组xxx', groupClass: 'tab-one-form-item' },
+            ],
+            {   // 角色选择
+                type: 'selRole',
+                authKey: '分公司',
+                label: '角色选择',
+                name: 'positionName', // 默认为空
+                dataName: 'positionId' // 默认positionId
+            }
+        ]
+        
+        ajax({
+            url: rApi,
+            callback: function(data){
+                // 渲染表单区域
+                tpl(layui.authForm.getFormTemp(formOpt, control)).render(data, function (html) {
+                    viewForm.html(html);
+                    form.render();
+                    renders.eleTrees(viewForm);
+                    renders.dateRange()
+                    renders.date()
+                    layui.selPersonnel.init(viewForm); // 选择人员
+                })
+
+                // 初始化选择角色控件
+                var view = $('body');
+                layui.selRole.init(view);
+                // 渲染表格区域
+            }
+        })
+
+        // 类型检测
+        var data = {
+            // success: {
+            //     time: '2013-05-01',
+            //     time2: '09:00:00',
+            //     time3: '2012-12',
+            //     str: 'so',
+            //     num1: 123,
+            //     bol: true
+            // },
+            error: {
+                time: undefined,
+                time2: null,
+                time3: 'akk',
+                str: 123,
+                num1: '123',
+                bol: 'false',
+                p: ''
+            },
+            // str: 'string',
+            // str2: 12345,
+            // str3: 445,
+            // str4: [97,00],
+            // num1: 0,
+            // num2: 1,
+            // time: '2012-12-12',
+            // bol: true,
+            // arr: [123],
+            // arr2: 123455,
+            // arr3: 'strings'
+        };
+        var dataType = {
+            success: {
+                time: 'date',
+                time2: 'time',
+                time3: 'month',
+                str: 'string',
+                num1: 'float',
+                bol: 'boolean'
+            },
+            error: {
+                time: 'date',
+                time2: 'time',
+                time3: 'month',
+                str: 'string',
+                num1: 'number',
+                bol: 'boolean'
+            },
+            str: 'string',
+            num1: 'number',
+            num2: 'number',
+            time: 'date',
+            bol: 'boolean',
+            arr: 'array',
+            arr2: 'array',
+            arr3: 'array'
+        };
+        var options = {
+            hasEmpty: false, // 是否可以为空
+            filterEmpty: ['time'], // 保留空值的属性键值
+        };
+
+        console.log(layui.utils.verifyData(data, dataType, options));
+
+        
+    })
+</script>

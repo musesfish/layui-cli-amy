@@ -1,0 +1,378 @@
+<title>echart</title>
+
+<style>
+    #progresschart{
+      width:668px;height:500px;background:#1E2026;padding: 20px;
+    }
+    #progresschart .nbox{
+      display:flex;justify-content: center;align-items: center;
+    }
+    #progresschart .title{
+      color:#fff;width:102px;margin-left: 20px;margin-right: 19px;
+    }
+    #progresschart .progresswrap{
+      align-self: flex-start;align-items: flex-start;align-content: flex-start;padding-top:21px;
+    }
+    #progresschart .progressbox{
+      background-color: #2D334C;height: 10px;
+    }
+    #progresschart .layui-bg-wtb{
+        background-color: transparent;
+        background-image: -webkit-linear-gradient(left, #AED2FF, #2D64FF,#386EFD);
+        background-image: -moz-linear-gradient(left, #AED2FF, #2D64FF,#386EFD);
+        background-image: -o-linear-gradient(left, #AED2FF, #2D64FF,#386EFD);
+        background-image: -ms-linear-gradient(left, #AED2FF, #2D64FF,#386EFD);
+        background-image: linear-gradient(left, #AED2FF, #2D64FF,#386EFD);
+				height: 10px;
+    }
+    #progresschart .tnum{
+        background: #3A54F8;border-radius: 50%;width:30px;height:30px;font-weight: bold;color:#fff;
+        line-height: 30px;
+        text-align: center;
+    }
+    #progresschart .price{
+      color:#fff;margin-top: 4px;
+    }
+
+    #charts{
+      overflow-x: scroll;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      white-space: nowrap;
+      width:100%;
+      padding-bottom:50px;
+      margin-bottom: 40px;
+    }
+    /*滚动条整体样式*/
+    #charts::-webkit-scrollbar {
+      width: 7px;     /*高宽分别对应横竖滚动条的尺寸*/
+      height: 5px;
+    }
+    #charts::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
+      border-radius: 5px;
+      -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+      background: #5D5D5D;
+    }
+    #charts::-webkit-scrollbar-track {/*滚动条里面轨道*/
+      -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+      border-radius: 0;
+      background: rgba(0,0,0,0.1);
+    }
+    #charts #llinechart,#charts #rlinechart{
+      width:500px;height:500px;display: inline-block;
+      z-index: 2;background: #1E2026;
+    }
+    #charts #rlinechart{
+      margin-left: -26px;
+      z-index: 1;
+    }
+    .charts{
+      position: absolute;
+      top:15px;
+      left:-8px;
+      width:45px;
+      height:500px;
+      z-index: 3;
+      overflow: hidden;
+      background: #1E2026;
+      padding-left: 30px;
+      box-shadow: #1E2026 0px 30px 30px 8px;
+    }
+    .charts #fixlinechart{
+      width:500px;
+      height:500px;
+    }
+    .fix-right{
+      position: absolute;
+      top:15px;
+      right:0px;
+      width:1px;
+      height:500px;
+      z-index: 3;
+      overflow: hidden;
+      background: #1E2026;
+      padding-left: 30px;
+      box-shadow: #1E2026 0px 30px 30px 8px;
+    }
+</style>
+
+<div class="layui-fluid" style="background: #1E2026">
+  <div class="linechart">
+    <div class="charts">
+      <div id="fixlinechart"></div>
+    </div>
+    <div id="charts">
+      <div id="llinechart"></div>
+      <div id="rlinechart"></div>
+    </div>
+    <div class="fix-right"></div>
+  </div>
+  <div id="progresschart">
+    <div class="nbox">
+      <div class="tnum">01</div>
+      <div class="title">xxx</div>
+      <div class="flex-1 progresswrap">
+        <div class="layui-progress progressbox">
+          <div class="layui-progress-bar layui-bg-wtb" lay-percent="20%" ></div>
+        </div>
+        <div class="price">5,4545.21 元</div>
+      </div>
+    </div>
+  </div>
+  <div id="mapchart" style="width:50%;height:500px;"></div>
+</div>
+
+<script>
+  layui.use(['echarts','element','utils','jquery'], function () {
+    var echarts = layui.echarts,
+        utils = layui.utils,
+        $ = layui.jquery,
+        element = layui.element;
+    //进度条
+    element.init(); 
+
+    // 折线图
+    var xdata = ['东莞中财捷业务团队', '帝鹰', '杭州会计团队', '第三方', '中财捷业务团队', '手动阀','钟宇芳会计团队', '东莞中财捷业务团队', '帝鹰', '杭州会计团队', '第三方', '中财捷业务团队', '手动阀','钟宇芳会计团队', '东莞中财捷业务团队', '帝鹰', '杭州会计团队', '第三方', '中财捷业务团队', '手动阀','钟宇芳会计团队', '东莞中财捷业务团队', '帝鹰', '杭州会计团队', '第三方', '中财捷业务团队', '手动阀'];
+    var ydata = [99991166.00, 792266.00, 662266.00, 577266.00, 98866.00, 55996.00,992266.00, 892266.00, 792266.00, 662266.00, 577266.00, 98866.00, 55996.00,992266.00, 892266.00, 792266.00, 662266.00, 577266.00, 98866.00, 55996.00,992266.00, 892266.00, 792266.00, 662266.00, 577266.00, 98866.00, 55996.00];
+    $("#llinechart,#rlinechart",).css('width',xdata.length*100);
+    let charts = document.getElementById("charts");
+    $("#charts").scrollLeft((xdata.length-8)*100)
+    var lchartDom = document.getElementById('llinechart');
+    var rchartDom = document.getElementById('rlinechart');
+    var fixlinechart = document.getElementById('fixlinechart');
+    var lchart = echarts.init(lchartDom,'#1E2026');
+    var rchart = echarts.init(rchartDom,'#1E2026');
+    var fixlinechart = echarts.init(fixlinechart,'#1E2026');
+    function getOption(num){
+      var option = {
+        tooltip: {
+          trigger: 'axis',
+        },
+        grid: {
+            top: '20%',
+            left: '0%',
+            right: '0%',
+            bottom: '0%',
+            containLabel: true
+        },
+        xAxis: {
+          type: 'category',
+          boundaryGap:true,
+          data: xdata,
+          triggerEvent:true,
+          axisLabel:{
+            interval: 0,
+            textStyle:{
+              color:num == 1 ? '#1E2026':"#fff",
+              fontSize:12,
+              padding:[5,0,0,0],
+            },
+            formatter:function(value,index){
+              if(index==0){
+                return 'fsdfsa'
+              }else if(value && value.length>6){
+                return value.substring(0,6)+'\n'+value.substring(6)
+              }else return value;
+            },
+          }
+        },
+        yAxis: {
+            type: 'value',
+            boundaryGap:true,
+            splitLine:{
+              lineStyle:{
+                color:"#242940"
+              }
+            }, 
+            axisLabel:{
+              formatter: function (value) {
+                return value/10000+'万'
+              },
+              textStyle:{
+                color:num != 1 ? '#1E2026':"#fff",
+                fontSize:12,
+              },
+            },
+            axisLine:{
+              lineStyle:{
+                color:'#1E2026',
+                width:1,
+              }
+            }
+        },
+        series: [
+          {
+            name: '收款',
+            type: 'line',
+            data: ydata,
+            smooth: true,
+            symbol:"circle",
+            symbolSize:8,
+            lineStyle: {
+              color: "#3A54F8",
+              width:2,
+            },
+            areaStyle: {
+              normal: {
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                  offset: 0,
+                  color: '#404970'  //渐变上边颜色
+                }, {
+                  offset: 1,
+                  color: 'transparent'//渐变下边颜色
+                }])
+              }
+            },
+            itemStyle: {
+              normal:{
+                color:num==1?"#1E2026":"#4863DB",
+                label:{
+                  show:true,
+                  position:'top',
+                  textStyle:{
+                    color:num==1?'#1E2026':"#404970"
+                  },
+                  formatter: function (params) {
+                    return params.value+'\n'+ (Number(params.dataIndex)+1);
+                  }
+                }
+              }
+            },
+            markPoint: {
+              symbolOffset: [6, -44], 
+              symbolSize: [140, 84],
+              symbol:num==1?null:`image://static/images/map/bgtip2.png`,
+              data: num==1?[]:[
+                  {name:"团队收款",type:"max",
+                    itemStyle: {color: "#fff",lineHeight:22,},
+                  },
+              ],
+              label: {
+                normal:{
+                  formatter:function (data,row,index){
+                    let c=Number(data.value).toFixed(2);
+                    return `{s|${c}}\n{d|团队收款}`
+                  },
+                  rich:{
+                    s:{fontSize:17,color:'#364DDD',fontWeight:'bold',lineHeight:26,},
+                    d:{fontSize:12,color:'#1E2026',},
+                  }
+                }
+              },
+            },
+          },
+        ]
+      };
+      return option;
+    }
+    lchart.setOption(getOption());
+    rchart.setOption(getOption(2));
+    fixlinechart.setOption(getOption(1));
+
+    //地图
+    echarts.registerMap('china', utils.getChinaJs());
+    var mydatas = [  
+        {name: '北京',value: '200' },
+        {name: '河南',value: '200' }, 
+        {name: '湖北',value: '200' }, 
+        {name: '上海',value: '200' },
+        {name: '浙江',value: '200' },
+        {name: '湖南',value: '600' },
+        {name: '重庆',value: '600'},  
+        {name: '广东',value: '600' },
+    ];
+    var mydata = [  
+        {name: '重庆',map: [106.504962,29.533155], },
+        {name: '湖南',map: [112.982279,28.19409], },  
+        {name: '广东',map: [113.280637,23.125178], },   
+    ];
+    var optionMap = { 
+        backgroundColor: '#1E2026',
+        geo: {
+            show: true,
+            map: 'china',
+            roam: false,
+            silent: 'none',
+            itemStyle: {
+                normal: {
+                    opacity: 1,              //图形透明度 0 - 1
+                    borderColor: "#303547",  //图形的描边颜色
+                    borderWidth: 0,          //描边线宽。为 0 时无描边。
+                    borderType: 'solid',     //柱条的描边类型，默认为实线，支持 'solid', 'dashed', 'dotted'。
+                    areaColor: "#303547",   //图形的颜色 #eee
+                }
+            }
+        },
+        visualMap: {  
+            show : false,  
+            x: 'left',  
+            y: 'center',   
+            splitList: [   
+                {start: 0, end:300},{start: 300, end: 600}, 
+            ],  
+            color: ['#3A54F8','#2D3FB1']  
+        },
+        series: [
+            {  
+                name: '数据',  
+                type: 'map',  
+                coordinateSystem: "geo",
+                symbolSize: 0,
+                silent: 'none',
+                mapType: 'china',   
+                roam: false,  
+                label: {  
+                    textStyle: {
+                        color: "white",
+                        fontSize: 6,
+                        backgroundColor: ''  //文字背景色
+                    },
+                    normal: {  
+                        show: true  //省份名称  
+                    },  
+                    emphasis: {  
+                        show: false  
+                    },
+                },  
+                data:mydatas,  //数据
+                itemStyle: {
+                    normal: {
+                        borderColor: "#3B3C83",     //图形的描边颜色
+                        borderWidth: 1,             //描边线宽。为 0 时无描边。
+                        borderType: 'solid',        //柱条的描边类型，默认为实线，支持 'solid', 'dashed', 'dotted'。
+                        areaColor: "#303547",   //图形的颜色 #eee
+                        label: {
+                            show: true,
+                            textStyle: {
+                                color: "white",
+                                fontSize: 10
+                            }
+                        }
+                    },
+                },
+            },
+            {
+                name: '自定义图标',
+                map: 'china',
+                type: "scatter",
+                coordinateSystem: "geo",
+                symbolSize: 0,
+                silent: 'none',
+            },
+             ...mydata.map((item, index) => {
+                return {
+                    type: "scatter",
+                    coordinateSystem: "geo",
+                    data: [{ name: item.name, value: item.map }],
+                    symbolSize: [25, 26],
+                    symbol: `image://static/images/map/icon (${index}).png`
+                }
+            })
+        ]
+
+    };  
+    var mapchart = echarts.init(document.getElementById('mapchart'));
+    mapchart.setOption(optionMap);
+
+  })
+</script>

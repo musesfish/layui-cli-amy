@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/layui/css/layui.css">
+  <style>
+    .pad {
+      padding: 20px 10px 10px;
+    }
+    .text-center {
+      text-align: center
+    }
+    .w150 {
+      width: 150px
+    }
+    form {
+      margin: 0 auto;
+      width: 384px;
+    }
+    .mt-20 {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+    <form class="pad layui-form" >
+      <div class="layui-form-item">
+        <label class="layui-form-label">标题：</label>
+        <div class="layui-input-block">
+          <input type="text" name='title' class="layui-input">
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">时间：</label>
+        <div class="layui-input-block">
+          <input type="text" name='time' class="layui-input">
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">提醒内容：</label>
+        <div class="layui-input-block">
+          <textarea name="tipcontnet" id="" cols="30" rows="2" class="layui-textarea" style=" resize: none"></textarea>
+        </div>
+      </div>
+      <div class="layui-form-item text-center mt-20">
+        <div class="layui-btn jin-btn-submit" lay-submit lay-filter="submitBtn">提交</div>
+      </div>
+    </form>
+
+    <script src="/layui/layui.js"></script>
+    <script>
+      layui.use(['jquery', 'form'],function(){
+        var $ = layui.jquery,
+          form = layui.form;
+        
+        form.render()
+       
+        form.on("submit(submitBtn)", function(data){
+          console.log(data.field)
+          var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+          parent.layer.close(index); //再执行关闭     
+          return false;
+        })
+      })
+    </script>
+  </body>
+</html> 

@@ -1,0 +1,90 @@
+.m-approval {
+    .m-approval-table {
+        // max-width: 800px;
+
+        tr {
+            th{
+                border:0px;
+            }
+            th{
+                background: #E0E0E0;
+            }
+
+            th,
+            td {
+                text-align: center;
+            }
+
+            th:nth-child(1) {
+                width: 15%;
+            }
+
+            th:nth-child(2) {
+                width: 25%;
+            }
+
+            th:nth-child(3),
+            th:nth-child(4),
+            th:nth-child(5) {
+                width: 20%;
+            }
+
+            .m-approval-btn-add {
+                display: inline-block;
+                width:30px;
+                height:30px;
+                cursor: pointer;
+            }
+            .m-approval-btn-del {
+                display: inline-block;
+                &.hide {
+                    display: none;
+                }
+                width:30px;
+                height:30px;
+                cursor: pointer;
+                position: relative;
+                top:0px;
+            }
+        }
+    }
+}
+//审批记录新规范
+.pro-process-new{
+    height:100%;
+    border-left:1px dashed #E0E0E0;
+    margin-left: 20px;
+    margin-top: 30px;
+    ul{
+        padding-bottom: 25px;
+        display: flex;
+        font-size: 14px;
+        .avatar{
+            width:36px;
+            height:36px;
+            margin-left: -18px;
+        }
+        .rdl{
+          padding-left: 10px;  
+          p{
+            padding-top: 5px;   
+          }
+          .tip-blue{
+            color:#00ACAC;
+          }
+          .tip-orange{
+            color:#F29812;
+          }
+          .tip-red{
+              color:#F21712;
+          }
+          .normal{
+            color:#999;
+          }
+          .approval-img{
+            width:50px;
+            height:50px;
+          }
+        }
+    }
+}

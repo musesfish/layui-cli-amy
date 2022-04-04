@@ -1,0 +1,127 @@
+<style>.animate{color:red;text-align:right;position:relative;left:36px;font-size:13px!important;top:1px;padding-left:20px;display:inline-block;white-space:nowrap;animation:15s wordsLoop linear infinite normal}@keyframes wordsLoop{0%{transform:translateX(100px);-webkit-transform:translateX(100px)}100%{transform:translateX(-110%);-webkit-transform:translateX(-110%)}}@-webkit-keyframes wordsLoop{0%{transform:translateX(100px);-webkit-transform:translateX(100px)}100%{transform:translateX(-110%);-webkit-transform:translateX(-110%)}}</style><div class="layui-layout layui-layout-admin"><div class="layui-header"><ul class="layui-nav layui-layout-left"><li class="layui-nav-item layadmin-flexible" lay-unselect><a href="javascript:;" layadmin-event="flexible" title="侧边伸缩"><i class="layui-icon layui-icon-shrink-right" id="LAY_app_flexible"></i></a></li><li class="layui-nav-item" lay-unselect><a href="javascript:;" layadmin-event="refresh" title="刷新"><i class="layui-icon layui-icon-refresh-3"></i></a></li></ul><ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right"><li class="layui-nav-item" lay-unselect style="overflow:hidden;width:150px"><a href="javascript:;"></a><script type="text/html" template lay-data="{state: 1}">{{# if(d.data>0){ }}
+                            <span class="u-tips-message-wrap-animate animate">
+                                您有{{d.data}}条未读消息！
+                            </span>
+                        {{# } }}</script></li><li class="layui-nav-item" lay-unselect><a class="u-tips-message-wrap" href="javascript:;" layadmin-event="message"><i class="layui-icon layui-icon-notice"></i><script type="text/html" template lay-data="{state: 1}">{{# if(d.data>0){ }}
+                            {{# if(d.data<=99){ }}
+                        <span class="u-tips-message">{{d.data}}</span>
+                            {{# }else { }}
+                        <span class="layui-badge-dot"></span>
+                            {{# } }}
+                        {{# } }}</script></a></li><li class="layui-nav-item layui-hide-xs" lay-unselect><a href="javascript:;" layadmin-event="theme"><i class="layui-icon layui-icon-theme"></i></a></li><li class="layui-nav-item lay-mr20" lay-unselect><script type="text/html" template lay-done="layui.element.render('nav', 'layadmin-layout-right');"><a href="javascript:;">
+                        {{#if(layui.data(layui.setter.tableName).sex == 2){ }}
+                            <img class='user-avatar' src="{{ layui.api.resouce + (layui.data(layui.setter.tableName).headImgUrl) }}" alt=" " 
+                            onerror="this.src='/static/images/girl.png'"
+                            >
+                        {{# }else if(layui.data(layui.setter.tableName).sex == 1){ }}
+                            <img class='user-avatar' src="{{ layui.api.resouce + (layui.data(layui.setter.tableName).headImgUrl) }}" alt=" " 
+                            onerror="this.src='/static/images/man.png'"
+                            >
+                        {{# }else{ }}
+                            <img class='user-avatar' src="/static/images/avatar.png" alt=" ">
+                        {{# } }}
+                        <cite>{{ layui.data(layui.setter.tableName).userName }}</cite>
+                    </a>
+                    <dl class="layui-nav-child">
+                        {{# if(layui.setter.runServeType !== 'prodServe'){ }}
+                        <dd class="text-center j-set-apis"><a class="fc-red" href="javascript:void">修改接口</a></dd>
+                        {{# } }}
+                        <dd style="text-align: center;"><a lay-href="/user/message/">修改资料</a></dd>
+                        <dd layadmin-event="logout" style="text-align: center;"><a>退出</a></dd>
+                    </dl></script></li><li class="layui-nav-item layui-show-xs-inline-block layui-hide-sm" lay-unselect><a href="javascript:;" layadmin-event="more"><i class="layui-icon layui-icon-more-vertical"></i></a></li></ul></div><div class="layui-side layui-side-menu"><div class="layui-side-scroll"><script type="text/html" template lay-type="post" lay-done="layui.data(layui.setter.menuKey, {key: 'menu', value: [{'iconTag':'layui-icon-user','id':10,'jumpUrl':'user','level':1,'menuName':'个人中心',
+            'menus':[{'iconTag':null,'id':64,'jumpUrl':'message','level':2,'menuName':'消息列表','menus':null,'parentId':10,'parentIds':'0,10,','sort':1}]}]}), layui.use('menu', layui.factory('menu'));" id="TPL_layout"><div class="layui-logo" lay-href="">
+                    <span>{{ layui.setter.name || 'layuiAdmin' }}</span>
+                </div>
+
+                <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
+                    {{#
+                        var path =  layui.router().path,
+                        pathURL = layui.admin.correctRouter(path.join('/')),
+                        dataName = layui.setter.response.dataName;
+                        d.dataList = [{"iconTag":"layui-icon-user","id":10,"jumpUrl":"user","level":1,"menuName":"个人中心","menus":[{"iconTag":null,"id":64,"jumpUrl":"message","level":2,"menuName":"消息列表","menus":null,"parentId":10,"parentIds":"0,10,","sort":1}]}];
+                        console.log('amytest',d.dataList);
+                        layui.each(d.dataList, function(index, item){
+                            if(item.menuName == '首页') return;
+                            var hasChildren = item.menus && typeof item.menus === 'object' && item.menus.length > 0,
+                            classSelected = function(){
+                                var match = path[0] == item.jumpUrl || (index == 0 && !path[0]) || (item.jump && pathURL == layui.admin.correctRouter(item.jump));
+                                if(match){
+                                    return hasChildren ? '' : 'layui-this';
+                                }
+                                return '';
+                            },
+                            url = (item.jump && typeof item.jump === 'string') ? item.jump : item.jumpUrl;
+                    }}
+                    <li data-name="{{ item.jumpUrl || '' }}" data-jump="{{ item.jump || '' }}" class="layui-nav-item {{ classSelected() }}">
+                        {{# if(hasChildren){ }}
+                        <a href="javascript:;" {{ hasChildren ? '' : 'lay-href="'+ url +'"' }} lay-tips="{{ item.menuName }}" lay-direction="2">
+                            <i class="layui-icon {{ item.iconTag }}"></i>
+                            <cite>{{ item.menuName }}</cite>
+                        </a>
+                        <dl class="layui-nav-child">
+                            {{# 
+                                layui.each(item.menus, function(index2, item2){
+                                    if(item2.menuName == '区域数据') return;
+                                    var hasChildren2 = typeof item2.menus == 'object' && item2.menus != null && item2.menus.length > 0,
+                                    classSelected2 = function(){
+                                        if(item2.menuName == '自定义设置') {
+                                            hasChildren2 = false;
+                                        }
+                                        var match = (path[0] == item.jumpUrl && path[1] == item2.jumpUrl) || (item2.jump && pathURL == layui.admin.correctRouter(item2.jump));
+                                        if(match){
+                                            return hasChildren2 ? 'layui-nav-itemed' : 'layui-this';
+                                        }
+                                        return '';
+                                    },
+                                    url2 = (item2.jump && typeof item2.jump === 'string') ? item2.jump : [item.jumpUrl, item2.jumpUrl, ''].join('/');
+                                    if(item2.menuName == '自定义设置') {
+                                        url2 = '/customer/customize/';
+                                    }
+                                }}
+                            <dd data-name="{{ item2.jumpUrl || '' }}" data-jump="{{ item2.jump || '' }}"
+                                {{ classSelected2() ? ('class="'+ classSelected2() +'"') : '' }}>
+                                <a href="javascript:;" {{ hasChildren2 ? '' : 'lay-href="'+ url2 +'"' }}>{{ item2.menuName }}</a>
+                                {{# if(hasChildren2){ }}
+                                <dl class="layui-nav-child">
+                                    {{# 
+                                        layui.each(item2.menus, function(index3, item3){
+                                            if(item3.menuName == '今日任务 - 自动分配' || item3.menuName == '二级公海 - 自动分配' || item3.menuName == '意向客户A、B、C类' || item3.menuName == '意向客户公海 - 批量转移') return;
+                                            var match = (path[0] == item.jumpUrl && path[1] == item2.jumpUrl && path[2] == item3.jumpUrl) || (item3.jump && pathURL == layui.admin.correctRouter(item3.jump)),
+                                            url3 = (item3.jump && typeof item3.jump === 'string') ? item3.jump : [item.jumpUrl, item2.jumpUrl, item3.jumpUrl].join('/')
+                                    }}
+                                    <dd data-name="{{ item3.jumpUrl || '' }}" data-jump="{{ item3.jump || '' }}"
+                                        {{ match ? 'class="layui-this"' : '' }}>
+                                        <a href="javascript:;" lay-href="{{ url3 }}" {{ item3.iframe ? 'lay-iframe="true"' : '' }}>{{ item3.menuName }}</a>
+                                    </dd>
+                                    {{# }); }}
+                                </dl>
+                                {{# } }}
+                            </dd>
+                            {{# }); }}
+                        </dl>
+                        {{# } }}
+                    </li>
+                    {{# }); }}
+                </ul></script></div></div><script type="text/html" template lay-done="layui.element.render('nav', 'layadmin-pagetabs-nav')">{{# if(layui.setter.pageTabs){ }}
+        <div class="layadmin-pagetabs" id="LAY_app_tabs">
+            <div class="layui-icon layadmin-tabs-control layui-icon-prev" layadmin-event="leftPage"></div>
+            <div class="layui-icon layadmin-tabs-control layui-icon-next" layadmin-event="rightPage"></div>
+            <div class="layui-icon layadmin-tabs-control layui-icon-down">
+                <ul class="layui-nav layadmin-tabs-select" lay-filter="layadmin-pagetabs-nav">
+                    <li class="layui-nav-item" lay-unselect>
+                        <a href="javascript:;"></a>
+                        <dl class="layui-nav-child layui-anim-fadein">
+                            <dd layadmin-event="closeThisTabs"><a href="javascript:;">关闭当前标签页</a></dd>
+                            <dd layadmin-event="closeOtherTabs"><a href="javascript:;">关闭其它标签页</a></dd>
+                            <dd layadmin-event="closeAllTabs"><a href="javascript:;">关闭全部标签页</a></dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+            <div class="layui-tab" lay-unauto lay-allowClose="true" lay-filter="layadmin-layout-tabs">
+                <ul class="layui-tab-title" id="LAY_app_tabsheader">
+                    <li lay-id="/">home</li>
+                </ul>
+            </div>
+        </div>
+        {{# } }}</script><div class="layui-body" id="LAY_app_body"><div class="layadmin-tabsbody-item layui-show home-bg"></div></div><div class="layui-footer">xx-xxx-xxx-xx</div><div class="layadmin-body-shade" layadmin-event="shade"></div></div>

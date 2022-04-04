@@ -1,0 +1,53 @@
+// main: ../base.less
+
+// 日志（时间线）
+
+.revise-log .timeline-box {
+  min-height: 90%;
+}
+.pro-process {
+  flex-basis: 0;
+  padding: 20px 20px 0 40px;
+  background-color: #f8f8f8;
+  word-break: break-all;
+  overflow: auto;
+  min-height: 60px;
+  .timeline-box {
+    position: relative;
+    &::before {
+      content: "";
+      display: block;
+      position: absolute;
+      left: -20px;
+      top: 5px;
+      height: 100%;
+      border-left: 1px solid var(--border-color);
+    }
+  }
+  .timeline-box>li {
+    position: relative;
+    margin-bottom: 10px;
+    line-height: 1.2;
+    &::before {
+      content: '';
+      position: absolute;
+      display: block;
+      left: -24px;
+      top: .22em;
+      z-index: 2;
+      width: 8px;
+      height: 8px;
+      background-color: var(--ui-theme-color);
+      border-radius: 50%;
+    }
+  }
+  .timeline-time {
+    margin-right: 20px;
+  }
+  .timeline-name {
+    margin-right: 10px;
+  }
+  // .timeline-content {
+    
+  // }
+}

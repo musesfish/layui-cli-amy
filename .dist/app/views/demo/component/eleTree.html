@@ -1,0 +1,151 @@
+<title>下拉树</title><style>#company-demo .layui-card{padding:30px 10px;min-height:300px}</style><div class="layui-card layui-form"><div class="layui-row">XSS攻击测试</div><div class="layui-row"><div class="layui-col-md4 layui-col-sm6"><div class="layui-form-item"><label class="layui-form-label">账号：</label><div class="layui-input-block"><input type="text" name="accout_str" class="layui-input" value="<script>alert(1)</script>"></div></div></div><div class="layui-col-md4 layui-col-sm6"><div class="layui-form-item"><label class="layui-form-label">密码：</label><div class="layui-input-block"><input type="text" name="pass_str" class="layui-input"></div></div></div></div><div class="layui-row"><button class="layui-btn w100" lay-submit lay-filter="submit-demo">提交</button></div></div><div class="" id="company-demo"></div><script type="text/html" id="companyDemo"><div class="layui-card" style="min-height: 60px">
+        <ul>
+            <li>* lay-filter 为id选择器，在框架tab页面中务必保持选择器独有性</li>
+        </ul>
+    </div>
+    <div class="layui-card layui-form">
+        <div class="layui-row mt-10">
+            <label class="layui-form-label">省份：</label>
+            <div class='layui-input-block'>
+                <select name="provinceCode" lay-filter='province'>
+                <option value="">请选择</option>
+                {{# layui.each(d.province, function(index, item){ }}
+                <option value="{{item.regProvinceNum}}">{{item.regProvinceName}}</option>
+                {{# }) }}
+            </select>
+            </div>
+        </div>
+        <div class="layui-row mt-10">
+            <label class="layui-form-label">分公司：</label>
+
+            <!-- 下拉树组件结构 -->
+            <!-- 
+            data-type: 预设 [ company, department, departments ]
+            data-evnet: 点击回调
+            data-filter: 对应m-tree-con的lay-filter(必要)
+         -->
+            <!-- 分公司下拉树 -->
+            <div class="layui-input-block m-tree-wrap" data-key="company" data-filter='m-tree-company' data-event="resetSelect">
+                <input type="hidden" name="companyId">
+                <input type="text" class="layui-input j-sel-tree" name="companyName" readonly autocomplete='off' placeholder="请选择">
+                <div class="m-tree-con" lay-filter="m-tree-company"></div>
+            </div>
+            <!-- 下拉树组件结构 end -->
+
+        </div>
+        <div class="layui-row mt-10">
+            <label class="layui-form-label">分公司下拉列表：</label>
+            <div class="layui-input-block m-tree-wrap" data-key="companys" data-filter='m-tree-company' data-event="resetSelect">
+                <input type="hidden" name="companyId">
+                <input type="text" class="layui-input j-sel-tree" name="companyName" readonly autocomplete='off' placeholder="请选择">
+                <div class="m-tree-con" lay-filter="m-tree-company"></div>
+            </div>
+        </div>
+        <div class="layui-row mt-10">
+            <label class="layui-form-label">部门下拉列表：</label>
+
+            <!-- 部门下拉树/列表 -->
+            <div class="layui-input-block m-tree-wrap" data-key="department" data-filter='m-tree-department'>
+                <input type="text" class="layui-input j-sel-tree" name="departmentName" readonly autocomplete='off' placeholder="请选择">
+                <div class="m-tree-con" lay-filter="m-tree-department"></div>
+            </div>
+
+
+        </div>
+        <div class="layui-row mt-10">
+            <label class="layui-form-label">部门下拉树：</label>
+        
+
+            <!-- 部门-二级部门-小组下拉树 -->
+            <div class="layui-input-block m-tree-wrap" data-key='departments' data-filter='m-tree-departments' data-event="callback">
+                <input type="hidden" name="departmentId">
+                <input type="hidden" name="groupId">
+                <input type="hidden" name="teamId">
+                <input type="text" name="departmentName" class="layui-input j-sel-tree" readonly placeholder="请选择">
+                <div class="m-tree-con" lay-filter="m-tree-departments"></div>
+            </div>
+
+        </div>
+
+        <div class="layui-row">
+            <div class="layui-input-block">
+                <div id="demo"></div>
+            </div>
+        </div>
+
+    </div></script><script>layui.use(['form', 'api', 'ajax', 'renders', 'table', 'laytpl', 'eleTree', 'code', 'slider'], function() {
+        var form = layui.form,
+            $ = layui.jquery,
+            tpl = layui.laytpl,
+            api = layui.api,
+            ajax = layui.ajax,
+            renders = layui.renders,
+            table = layui.table;
+
+        /* xss */
+        var elem = $('input[name="pass_str"]');
+        form.on("submit(submit-demo)", function(data){
+            var data = data.field;
+            view.html((`您搜索关键词是：${escape(data.accout_str)}`));
+            elem.val(data.accout_str);
+            return false;
+        })
+
+        /* xss end */
+
+        var view = $("#company-demo"),
+            tplTemp = companyDemo.innerHTML;
+
+        var rApi = [{
+            url: 'province',
+            data: {},
+            key: 'province',
+            retKey: 'objList'
+        }, ]
+        ajax({
+            url: rApi,
+            callback: create
+        });
+
+        function create(data) {
+            tpl(tplTemp).render(data, function(html) {
+                view.html(html);
+                form.render();
+
+                // 自定义联动点击回调
+                var treeFunc = {
+                    'resetSelect': function(d) {
+                        console.log('点击回调 节点数据：', d.data.currentData)
+                        // 赋值、清空下级联动等操作
+                    },
+                    'callback': function(d){
+                        // 部门-二级部门-小组下拉树 点击回调
+                        console.log('点击回调 节点数据：', d.data.currentData)
+                    }
+                }
+
+                renders.eleTrees(view, treeFunc)
+
+
+                layui.eleTree.render({
+                    elem: '#demo',
+                    url: api.getApi('/company/getCompanysByCondition'),
+                    where: {
+                        "provinceCode": 11,
+                        "pageSize": 999,
+                        "state": 0
+                    },
+                    request: {
+                        name: 'companyName',
+                    },
+                    response: {
+                        statusName: 'ret',
+                        statusCode: 100,
+                        dataName: ["data","list"]
+                    }
+                
+                })
+
+            })
+        }
+    })</script>

@@ -1,0 +1,343 @@
+// main: ../base.less
+
+.jin-btn {
+  display: inline-block;
+  height: 40px;
+  line-height: 40px;
+  font-size: 14px;
+  text-align: center;
+  border: 0;
+  cursor: pointer;
+  background-color: var(--button-deault_color);
+}
+
+.jin-btn-query,
+.jin-btn-submit {
+  background-color: var(--button-deault_color);
+  color: #fff;
+}
+
+.jin-btn-submit {
+  max-width: 92%;
+}
+
+.jin-btn-query:extend(.jin-btn) {
+  width: 160px;
+  &:empty::after {
+    content: "\641c\7d22";
+  }
+}
+
+.jin-btn-reset:extend(.jin-btn) {
+  width: 100px;
+  text-align: center;
+  background-color: #ddd;
+  color: #999;
+  &:empty::after {
+    content: "\91cd\7f6e";
+  }
+}
+
+.jin-btn-submit:extend(.jin-btn) {
+  width: 380px;
+  &:empty::after {
+    content: "\7acb\5373\63d0\4ea4";
+  }
+}
+
+// 附件上传
+.jin-btn-upload,
+.jin-btn-upload-pic {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 5px 5px 5px 0;
+  width: 100px;
+  height: 100px;
+  border: 1px solid #DDDDDD;
+  background-color: #fff;
+  line-height: 1;
+  outline: #DDDDDD dashed 1px;
+  outline-offset: -5px;
+  color: #999999;
+  text-align: center;
+  cursor: pointer;
+  vertical-align: middle;
+  &::before {
+    content: '';
+    display: inline-block;
+    margin: 0 auto;
+    width: 28px;
+    height: 24px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  &::after {
+    content: "\70b9\51fb\6216\62d6\62fd\D\A\6587\4ef6\6b64\5904\4e0a\4f20";
+    display: block;
+    margin-top: 10px;
+    font-size: 12px;
+    line-height: 18px;
+    white-space: pre;
+  }
+}
+
+.jin-btn-upload:hover,
+.jin-btn-upload-pic:hover {
+  color: #00ACAC;
+  border-color: #00ACAC;
+  outline-color: #00ACAC;
+}
+.jin-btn-upload::before {
+  background-image: url(/static/images/jin/file.png);
+}
+.jin-btn-upload[data-accept="images"]::before,
+.jin-btn-upload-pic::before {
+  background-image: url(/static/images/jin/pic.png);
+}
+.jin-btn-upload:hover::before {
+  background-image: url(/static/images/jin/file-hover.png);
+}
+.jin-btn-upload[data-accept="images"]:hover::before,
+.jin-btn-upload-pic:hover:before {
+  background-image: url(/static/images/jin/pic-hover.png);
+}
+
+// 资料上传按钮
+.jin-btn-info-upload,
+.jin-btn-info-upload-pic {
+  display: inline-flex;
+  align-items: center;
+  margin: 5px 5px 5px 0;
+  width: 40px;
+  height: 40px;
+  background-color: #fff;
+  color: #999;
+  border: 1px solid #ddd;
+  text-align: center;
+  vertical-align: middle;
+  &::before {
+    content: '';
+    display: inline-block;
+    margin: 0 auto;
+    width: 28px;
+    height: 24px;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+}
+
+.jin-btn-info-upload:hover,
+.jin-btn-info-upload-pic:hover {
+  color: #00ACAC;
+  border-color: #00ACAC;
+}
+
+.jin-btn-info-upload::before {
+  background-image: url(/static/images/jin/file.png);
+}
+.jin-btn-info-upload:hover::before {
+  background-image: url(/static/images/jin/file-hover.png);
+}
+.jin-btn-info-upload-pic::before {
+  background-image: url(/static/images/jin/pic.png);
+}
+.jin-btn-info-upload-pic:hover::before {
+  background-image: url(/static/images/jin/pic-hover.png);
+}
+
+
+.jin-btn-tag_add:extend(.jin-btn) {
+  width: 70px;
+  height: 40px;
+  background-image: url(/static/images/jin/btn-tag-add.png);
+  background-size: 100% 100%;
+  vertical-align: middle;
+}
+
+.jin-btn-add, .jin-btn-del,
+.add-circle, .del-circle,
+.m-approval-btn-add, .m-approval-btn-del {
+  display: inline-block;
+  margin: 0 5px;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+.jin-btn-add,
+.add-circle,
+.m-approval-btn-add {
+  background-image: url(/static/images/jin/btn-add.png);
+}
+
+.jin-btn-del,
+.del-circle,
+.m-approval-btn-del {
+  background-image: url(/static/images/jin/btn-del.png);
+}
+
+.take-data .market-up-file {
+  padding-left: 20px;
+}
+
+body .m-contact-btn-file > input.layui-input {
+  display: inline-block;
+  height: 40px;
+  line-height: 40px;
+  border: 0;
+  text-align: center;
+  cursor: pointer;
+  color: #fff!important;
+  background-color: var(--button-deault_color);
+  &:not(.layui-unselect):read-only::placeholder {
+    color: #fff!important;
+  }
+}
+
+.m-contact-btn-file .layui-input:read-only::placeholder {
+  color: #fff!important;
+}
+
+.upload-pre-file {
+  display: inline-flex;
+  margin: 5px 5px 5px 0;
+  flex-direction: column;
+  width: 120px;
+  height: 100px;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+  background-color: #fff;
+  vertical-align: middle;
+  .file-box {
+    position: relative;
+    margin: 4px;
+    height: 64px;
+    border: 1px dashed #ddd;
+    background-image: url("/static/images/jin/btn-file.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: auto 76%;
+    overflow: hidden;
+    transition: all 3s ease-in;
+    .pre-img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      z-index: -1;
+      background-color: #fff;
+    }
+    .upload-pre-mask {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,.5);
+      color: #fff;
+      text-align: center;
+      transform: translate(0, -100%);
+      .file-icon {
+        display: block;
+        width: 28px;
+        height: 28px;
+        object-fit: contain;
+        border: 0;
+      }
+      a {
+        color: #fff;
+      }
+      .touch-mask {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+    }
+    &:hover .upload-pre-mask{
+      transform: translate(0, 0);
+    }
+    &[data-type="xlxs"],
+    &[data-type="xlx"] {
+      background-image: url("/static/images/jin/btn-xlxs.png");
+    }
+    &[data-type="pdf"] {
+      background-image: url("/static/images/jin/btn-pdf.png");
+    }
+    &[data-type="word"] {
+      background-image: url("/static/images/jin/btn-word.png");
+    }
+  }
+  .file-control {
+    flex: 1;
+    margin: 0 4px 4px;
+    display: flex;
+    align-items: center;
+    .file-name {
+      flex: 1;
+      font-size: 12px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      color: #999;
+      cursor: pointer;
+      &:hover {
+        color: #00ACAC;
+      }
+    }
+    .file-btn-del {
+      font-family: layui-icon!important;
+      font-size: 18px;
+      color: #999;
+      &::after {
+        content: "\e640";
+      }
+      &:hover {
+        color: red;
+      }
+    }
+  }  
+}
+
+.upload-info-pre-file {
+  position: relative;
+  display: inline-block;
+  margin: 5px 5px 5px 0;
+  width: 42px;
+  height: 42px;
+  vertical-align: middle;
+  border: 1px solid #ddd;
+  overflow: hidden;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+  .file-btn-del {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    font-size: 12px;
+    color: red;
+    text-align: center;
+    background-color: rgba(255, 255, 255, .75);
+    transform: translate(0, 100%);
+    cursor: pointer;
+    &::after {
+      content: "\5220\9664";
+    }
+  }
+  &:hover .file-btn-del{
+    transform: translate(0, 0);
+  }
+}

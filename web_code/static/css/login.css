@@ -1,0 +1,106 @@
+.login-container {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+.login-poster {
+  margin: 8.3333vw 0 0 1.3541vw;
+  width: 50.8854vw;
+  height: 32.7083vw;
+}
+.login-form-container {
+  position: absolute;
+  top: 50%;
+  right: 16.6666vw;
+  width: 400px;
+  transform: translate(0, -50%);
+}
+.login-form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  color: #fff;
+}
+.login-form-header .company-name {
+  font-size: 29px;
+  letter-spacing: 2px;
+}
+.login-form-header .company-separate {
+  font-family: "MicrosoftYaHei-Bold", "YaHei";
+  font-size: 24px;
+  font-weight: bold;
+}
+.login-form-header .company-desc {
+  font-size: 24px;
+  letter-spacing: 2px;
+}
+.login-form-main {
+  margin-top: 16px;
+  padding: 30px 22px 55px;
+  background: #fff;
+  border-radius: 6px;
+}
+.login-form-main .login-form-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #20222A;
+}
+.login-form-main .login-form-label {
+  margin-top: 20px;
+  font-size: 16px;
+  font-weight: Medium;
+  color: #20222A;
+}
+.login-form-main .login-form-input {
+  display: flex;
+  padding: 5px 0;
+  height: 48px;
+  border-bottom: 1px solid #ECF8F8;
+  align-items: center;
+}
+.login-form-main .login-form-input .layui-input,
+.login-form-main .login-form-input .layui-input:hover,
+.login-form-main .login-form-input .layui-input:focus {
+  height: 48px;
+  line-height: 48px;
+  padding-left: 0;
+  border: 0!important;
+}
+.login-form-main .login-form-input .login-code {
+  width: 98px;
+  height: 48px;
+  background: #E7E7E7;
+}
+.login-form-main .login-form-input .login-btn-reload {
+  margin: 0 10px;
+  width: 25px;
+  height: 25px;
+  background: url(/static/images/icon-reload.png) no-repeat center / 100%;
+}
+.login-form-main .login-btn-submit {
+  margin-top: 50px;
+  width: 100%;
+  height: 52px;
+  line-height: 52px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #00ACAC;
+  background: #ECF8F8;
+  border: 0;
+}
+.copyright {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  padding: 10px 0;
+  width: 100%;
+  color: #fff;
+  text-align: center;
+  line-height: 20px;
+}
+.copyright a {
+  color: #fff;
+}
+.copyright a:hover {
+  color: #aaa;
+}

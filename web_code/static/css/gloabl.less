@@ -1,0 +1,40 @@
+// main: ./base.less
+
+/* 背景颜色配置 */
+@colorGreen: #00ACAC;
+@colorWhite: #fff;
+
+@BgDisabled: #f2f2f2;
+
+@btnColor: #00ACAC; // 按钮默认颜色
+
+@colorOrange: #F78400; // 橙色
+@colorTag: #004680; // 标签蓝色
+
+:root {
+  --service-status-in: #008000;         // 服务中
+  --service-status-abnormal: #FFCC00;   // 异常
+  --service-status-abnormal-end: #FF6600;  // 异常完结
+  --service-status-churn: #FF99CC;      // 流失中
+  --service-status-churn-end: #FF0000;  // 流失完结
+  --fc-bluegreen: @colorGreen; // 蓝绿色文本
+
+  --text-color: #243030; // 主题/标题/正文
+  --text-tips-color: #999; // 提示
+  --text-orange: #FF4200;
+  --color-disabled: #999; // 禁用文本颜色
+
+  --button-deault_color: @btnColor;
+  --btn-text-color: #00acac;
+
+  --border-color: #e0e0e0; // 框线辅助色
+  --border-focus-color: #555;
+
+  --ui-theme-color: #00acac; // ui主色调
+  --ui-theme-auxiliary-color: #d6f2f2; // 辅助色（蓝绿）
+  --ui-theme-auxiliary-color2: #ddd; // 辅助色（灰）
+}
+
+body {
+  color: var(--text-color);
+}

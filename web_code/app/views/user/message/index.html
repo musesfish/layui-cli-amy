@@ -1,0 +1,156 @@
+<title>消息列表</title>
+
+<div class="layui-fluid">
+    <div id="personnelcenter-message-view"></div>
+</div>
+
+<script type="text/html" id='personnelcenterMessageTemp'>
+<div class='layui-card' style="padding: 0 !important; position: relative;">
+    <div class="layui-tab layui-tab-brief" lay-filter="notice-type">
+        <ul class="layui-tab-title">
+            <li class="layui-this" data-where="on">接收</li>
+            <li data-where="sent">发出</li>
+        </ul>
+    </div>
+    <form class='layui-form m-form-bord form-ss-bord'>
+        <div class='layui-row'>
+            <div class='layui-col-md3 layui-col-sm6'>
+                <div class="layui-form-item">
+                    <label class='layui-form-label'>通知类型</label>
+                    <div class='layui-input-block'>
+                        <select name="noticeType">
+                            <option value=''>请选择通知类型</option>
+                            {{# layui.each(d.noticeTypeName, function(index, item){ }}
+                                <option value="{{item.id}}">{{item.noticeTypeName}}</option>
+                            {{# }) }}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class='layui-col-md3 layui-col-sm6'>
+                <div class="layui-form-item">
+                    <label class='layui-form-label'>标题</label>
+                    <div class='layui-input-block'>
+                        <input type="text" placeholder="请输入标题" autocomplete="off" class='layui-input' name='title'>
+                    </div>
+                </div>
+            </div>
+            <div class='layui-col-md3 layui-col-sm6'>
+                <div class="layui-form-item">
+                    <div class="date-range flex">
+                        <label class='layui-form-label layui-form-labela'><img src="../../../../static/images/rl2.png" alt=""></label>
+                        <input class="date-range-item" data-start="startDate" data-end="endDate" >
+                        <input class="layui-input flex-1" placeholder=" 创建日期" style="padding: 0" name="startDate">
+                        <span class="pad-lr-5 bor-lr">至</span>
+                        <input class="layui-input flex-1" placeholder=" 创建日期" style="padding: 0" name="endDate">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-md3 flex pad-juco-right">
+                <button type='reset' class="layui-btn layui-btn-c w100 pull-right">重置</button>
+                <button class="layui-btn w150 pull-right" lay-submit lay-filter='personnelcenter-message-query'>搜索</button>
+            </div>
+        </div>
+        <!-- <div class='layui-row mt-20'>
+            <button class='layui-btn w100 pull-right' lay-submit lay-filter='personnelcenter-message-query'>搜索</button>
+            <button type='reset' class="layui-btn w100 pull-right  mr-10">重置</button>
+        </div> -->
+    </form>
+    <p class="tis-icon" style="display: none;"><img src="../../../../../static/images/tips.png" style="height:13px;width:13px;margin-right: 10px;" alt="">暂未搜索出您想要的内容，您可以切换选项试试~</p>
+</div>
+<div class='layui-card'>
+    <table class='layui-table' id='personnelcenter-message-table' lay-filter='personnelcenter-message-table'></table>
+</div>
+</script>
+<!--  -->
+
+<script type='text/html' id="personnelcenterMessageExamineTemp">
+<div class='examine-wrap'>
+    <table class="layui-table form-table">
+        <colgroup>
+            <col width='130'>
+            <col>
+            <col width='130'>
+            <col> 
+        </colgroup>
+        <tr>
+            <td>消息类型</td>
+            <td class="co243">{{d.noticeTypeName||''}}</td>
+            <td>创建人</td>
+            <td class="co243">{{d.userName||''}}</td>
+        </tr>
+        <tr>
+            <td>创建时间</td>
+            <td class="co243">{{d.createDate||""}}</td>
+            <td>接收人</td>
+            <td class="co243" style="padding:10px;">{{# layui.each(d.users, function(index,item){ }}
+                <span>{{item.userName || ''}}{{d.users.length == (index+1) ? '' : '、'}}</span>
+            {{# }) }}</td>
+        </tr>
+        <tr>
+            <td>消息标题</td>
+            <td class="co243" colspan="3">
+                {{d.noticeTitle}}
+            </td>
+        </tr>
+        <tr class="z-unedit">
+            <td>通知内容</td>
+            <td colspan="3">
+                <div class="co243" style="resize: unset;color: #243030;padding:15px;">{{d.content||""}}</div>
+                <!-- <textarea class="layui-textarea co243 flex" style="resize: unset;color: #243030;">{{d.content||""}}</textarea> -->
+            </td>
+        </tr>
+    </table>
+</div>
+</script>
+<script type='text/html' id='personnelNoticeAddMess'>
+    <form class='layui-form m-notice-warp' lay-filter='personnel-notice-add-form'>
+        <table class="layui-table form-table">
+            <colgroup>
+                <col width="130">
+                <col>
+                <tr>
+                    <td><b></b>标题</td>
+                    <td><input type="text" class='layui-input' name="noticeTitle" lay-verify="required"></td>
+                </tr>
+                <tr>
+                    <td>通知类型</td>
+                    <td>
+                        <select name="noticeType" lay-verify="required">
+                            <option value=''>请选择</option>
+                            {{# layui.each(d.noticeTypeName, function(index, item){ }}
+                                <option value="{{item.id}}">{{item.noticeTypeName}}</option>
+                            {{# }) }}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><b></b>接收人</td>
+                    <td>
+                        <div class="pl-10">
+                            <span class='cut-tag cut-personnel'></span>
+                            <span class='j-add-personnel fc-blue cur-pointer'>+添加人员</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>通知内容</td>
+                    <td><textarea class='layui-textarea' name="content"></textarea></td>
+                </tr>
+            </colgroup>
+        </table>
+        <div class='layui-row text-center mt-30'>
+            <button class='layui-btn jin-btn-submit' lay-submit lay-filter='personnel-notice-add-submit'>发送</button>
+        </div>
+    </form>
+</script>
+
+<script>
+    layui.use("UserMessage", layui.factory("UserMessage"))
+</script>
+
+<style>
+    .co243 {
+        color: #243030;
+    }
+</style>
